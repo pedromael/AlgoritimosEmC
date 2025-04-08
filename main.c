@@ -11,9 +11,8 @@ int main()
     int escolha;
     while(1){
 
-        entrada();
+        if(!logado) entrada();
         printf("-----------------------------");
         principal();
-        scanf("%d", &escolha);
     }
 }

@@ -61,7 +61,7 @@ void entrada(){
             if(login()) break;
         }
         else if(escolha == 2){
-            if (criar_conta()) login();
+            criar_conta();
         }
         else printf("escolha 1 ou 2\n");
     }

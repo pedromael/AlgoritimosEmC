@@ -13,6 +13,10 @@
 
 void principal();
 void entrada();
+int transferir();
+int depositar();
+int levantamento();
+void consultar_saldo();
 
 // estruturas
 
@@ -27,6 +31,6 @@ typedef struct{
 
 extern int numero_usuarios;
 extern usuario *usuarios;
-extern logado;
+extern int logado;
 
 #endif
