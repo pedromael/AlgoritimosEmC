@@ -4,6 +4,7 @@ void principal()
 {
     int escolha;
 
+    printf("------------------------------\n");
     printf("escolha as opcoes disponiveis \n");
     printf("1-Levantamento \n");
     printf("2-Tranferencia \n");
@@ -24,5 +25,7 @@ void principal()
     }
     else if(escolha == 4){
         consultar_saldo();
+    }else{
+        logado = 0;
     }
 }

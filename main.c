@@ -12,7 +12,6 @@ int main()
     while(1){
 
         if(!logado) entrada();
-        printf("-----------------------------");
         principal();
     }
 }
