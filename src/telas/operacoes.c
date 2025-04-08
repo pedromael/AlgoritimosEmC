@@ -9,7 +9,7 @@ int transferir(){
     printf("digite o valor a transferir\n");
     scanf("%d", &valor);
 
-    if(usuarios[id-1].id && id == logado){
+    if(usuarios[id-1].id > 0 && id == logado){
        printf("ID de usuario nao encontrado\n");
     }
 

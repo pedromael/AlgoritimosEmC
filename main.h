@@ -13,6 +13,9 @@
 
 void principal();
 void entrada();
+
+// funcao de operacoes
+
 int transferir();
 int depositar();
 int levantamento();

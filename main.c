@@ -8,10 +8,11 @@ int main()
 {
     usuarios = malloc(30 * sizeof(usuario));
 
-    int escolha;
     while(1){
-
         if(!logado) entrada();
         principal();
+        continue;
     }
+
+    return 0;
 }
