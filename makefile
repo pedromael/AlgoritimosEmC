@@ -17,7 +17,3 @@ $(TARGET): $(OBJS)
 
 clean:
 	rm -f $(TARGET) $(OBJS)
-
-# Regra para verificar se o compilador e as bibliotecas estão disponíveis
-check:
-	@sdl2-config --version > /dev/null || (echo "SDL2 não encontrado. Instale a biblioteca SDL2." && exit 1)
