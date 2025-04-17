@@ -1,0 +1,23 @@
+# Banco - Projeto de Comércio Bancário
+
+Este projeto é uma aplicação para gerenciar transações bancárias e operações comerciais. Ele foi desenvolvido em C para oferecer alto desempenho e eficiência.
+
+## Funcionalidades
+
+- Gerenciamento de contas bancárias.
+- Processamento de transações financeiras.
+- Relatórios detalhados de operações.
+- Suporte a múltiplos usuários.
+
+## Como Compilar
+
+1. Certifique-se de ter um compilador C instalado (como GCC).
+2. Navegue até o diretório do projeto.
+3. Execute o comando:
+    ```
+    make
+    ```
+
+## Como Executar
+
+Após a compilação, execute o programa com:
