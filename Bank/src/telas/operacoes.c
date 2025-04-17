@@ -2,6 +2,7 @@
 
 int transferir(){
     int valor,id;
+    
     printf("-----------------------------\n");
     printf("digite o ID do usuario a receber\n");
     scanf("%d", &id);
