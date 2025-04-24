@@ -26,7 +26,7 @@ void consultar_saldo();
 typedef struct{
     int id;
     double patrimonio_liquido;
-    char nome[30];
+    char nome[50];
     int senha;
 }usuario;
 

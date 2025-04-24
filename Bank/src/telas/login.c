@@ -36,7 +36,14 @@ int criar_conta(){
     printf("digite o seu nome:\n");
     scanf("%s", novo_usuario.nome);
     printf("digite o sua senha:\n");
-    scanf("%d", &novo_usuario.senha);
+    while(1){
+        scanf("%d", &novo_usuario.senha);
+        if(novo_usuario.senha < 1000 || novo_usuario.senha > 9999){
+            printf("senha deve ter 4 digitos:\n");
+            continue;
+        }
+        break;
+    }
 
     printf("------------------------\n");
     numero_usuarios++;
