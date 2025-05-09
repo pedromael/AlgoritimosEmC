@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g
-LIBS = 
+LIBS = -lsqlite3    
 
 TARGET = bank
 

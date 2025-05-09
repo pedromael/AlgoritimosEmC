@@ -10,18 +10,19 @@ int transferir(){
     printf("digite o valor a transferir\n");
     scanf("%d", &valor);
 
-    if(usuarios[id-1].id > 0 && id == logado){
-       printf("ID de usuario nao encontrado\n");
+    if(consultar_se_usuario_existe(bd, id) == 0){
+        printf("ID de usuario nao encontrado\n");
+        return 0;
     }
 
-    if(valor > usuarios[logado-1].patrimonio_liquido){
+    if(valor > consultar_saldo(bd, logado)){
         printf("valor maior que seu patrimonio liquido\n");
         return 0;
     }
 
     int escolha;
 
-    printf("digite 1 - para - transferir: %d.00 para %s\n", valor ,usuarios[id-1].nome);
+    printf("digite 1 - para - transferir: %d.00 para %s\n", valor ,consultar_nome_usuario(bd, id));
     scanf("%d", &escolha);
     
     if(escolha != 1){
@@ -29,20 +30,28 @@ int transferir(){
         return 0;
     }
 
+    inserir_transacao(bd, logado, id, valor);
     printf("transferencia realizada com sucesso👌\n");
-
-    usuarios[logado-1].patrimonio_liquido -= valor;
-    usuarios[id-1].patrimonio_liquido += valor;
+    
 
     return 1;
 }
 
 int depositar(){
-    int valor;
+    int valor, id_user;
     printf("------------------------------\n");
     printf("digite o dinheiro a depositar\n");
     scanf("%d", &valor);
-    usuarios[logado-1].patrimonio_liquido += valor;
+    printf("digite o ID do usuario a depositar\n");
+    scanf("%d", &id_user);
+
+    if(consultar_se_usuario_existe(bd, id_user) == 0){
+        printf("ID de usuario nao encontrado\n");
+        return 0;
+    }else{
+        inserir_deposito(bd, id_user, logado, valor);
+    }
+
     printf("%d.00 depositado com sucesso\n", valor);
     return 1;
 }
@@ -56,17 +65,21 @@ int levantamento(){
     if(valor > usuarios[logado-1].patrimonio_liquido){
         printf("valor superior ao teu saldo\n");
     }else{
-        usuarios[logado-1].patrimonio_liquido -= valor;
+        if(consultar_saldo(bd, logado) < valor){
+            printf("valor superior ao seu patrimonio liquido\n");
+            return 0;
+        }
+        inserir_levantamento(bd, logado, valor);
         printf("------------------------------\n");
         printf("---levantamento---simunlado---\n");
         printf("------------------------------\n");
         printf("levantamento de %d.00, realizado com sucesso\n", valor);
-        printf("valor restante: %.2f\n", usuarios[logado-1].patrimonio_liquido);
+        printf("valor restante: %.2f\n", consultar_saldo(bd, logado));
     }
     return 1;
 }
 
-void consultar_saldo(){
+void consultar_saldo_(){
     printf("-------------------------------\n");
-    printf("senhor %s, o seu saldo e de: %.2f\n", usuarios[logado-1].nome, usuarios[logado-1].patrimonio_liquido);
+    printf("senhor %s, o seu saldo e de: %.2f\n", consultar_nome_usuario(bd, logado), consultar_saldo(bd, logado));
 }

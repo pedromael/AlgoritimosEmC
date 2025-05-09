@@ -1,40 +1,74 @@
 #include "../../main.h"
 
-int autenticar(int id,int  senha){
-    for(int i = 0; i < numero_usuarios; i++){
-        if(usuarios[i].id == id && usuarios[i].senha == senha){
-            return 1;
-        }
+int autenticar(int id, int senha) {
+    sqlite3_stmt *stmt;
+    const char *sql = "SELECT id FROM usuarios WHERE id = ? AND pin = ?;";
+
+    int resultado = sqlite3_prepare_v2(bd, sql, -1, &stmt, 0);
+    if (resultado != SQLITE_OK) {
+        fprintf(stderr, "Erro ao preparar a consulta: %s\n", sqlite3_errmsg(bd));
+        return 0;
     }
-    return 0;
+
+    // Bind dos parâmetros
+    sqlite3_bind_int(stmt, 1, id);
+    sqlite3_bind_int(stmt, 2, senha);
+
+    // Executar a consulta
+    resultado = sqlite3_step(stmt);
+
+    int autenticado = 0;
+    if (resultado == SQLITE_ROW) {
+        autenticado = 1;
+    }
+
+    sqlite3_finalize(stmt);
+    return autenticado;
 }
 
 int login(){
-    int id, senha, escolha;
-    printf("digite o seu id:\n");
-    scanf("%d", &id);
-    printf("digite o sua senha:\n");
-    scanf("%d", &senha);
+    int id, senha;
+    while (1) {
+        printf("digite o seu id:\n");
+        scanf("%d", &id);
+        printf("digite o sua senha:\n");
+        scanf("%d", &senha);
 
-    if(autenticar(id, senha)){
-        logado = id;
-        return 1;
-    }else {
+        if (autenticar(id, senha)) {
+            logado = id;
+            char *nome_usuario = consultar_nome_usuario(bd, logado);
+            printf("Bem vindo %d : %s:\n", logado, nome_usuario);
+            return 1;
+        }
+
         printf("id ou senha errada:\n");
         printf("1 - tentar novamente\n");
-        printf("Qualquer tecla - cancelar\n");
+        printf("Qualquer outro número - cancelar\n");
 
+        int escolha;
         scanf("%d", &escolha);
-        if(escolha == 1) login();
+        if (escolha != 1) break;
     }
     return 0;
 }
 
-int criar_conta(){
+
+int criar_conta(int conta_gerente){
+    int gerente = conta_gerente ? 1 : 0;
     usuario novo_usuario;
     
     printf("digite o seu nome:\n");
-    scanf("%s", novo_usuario.nome);
+    scanf(" %[^\n]", novo_usuario.nome);
+    printf("digite o seu numero de telefone:\n");
+    while(1){
+        scanf("%d", &novo_usuario.numero_telefone);
+        if(novo_usuario.numero_telefone < 100000000 || novo_usuario.numero_telefone > 999999999){
+            printf("numero de telefone deve ter 9 digitos:\n");
+            continue;
+        }
+        break;
+    }
+
     printf("digite o sua senha:\n");
     while(1){
         scanf("%d", &novo_usuario.senha);
@@ -46,30 +80,30 @@ int criar_conta(){
     }
 
     printf("------------------------\n");
-    numero_usuarios++;
-    novo_usuario.id = numero_usuarios;
-    novo_usuario.patrimonio_liquido = 0.00;
 
-    usuarios[numero_usuarios - 1] = novo_usuario;
+    int id = inserir_usuario(bd, novo_usuario.nome, novo_usuario.numero_telefone, novo_usuario.senha, gerente);
 
-    printf("Bem vindo %s:\n", novo_usuario.nome);
-    printf("seu ID unico e %d:\n", novo_usuario.id);
+    if(gerente){
+        printf("Conta gerente criada com sucesso:\n");
+        printf("Bem vindo %s:\n", novo_usuario.nome);
+        printf("seu ID unico e %d:\n", id);
+    }else{
+        printf("Conta usuario criada com sucesso:\n");
+        printf("Bem vindo %s:\n", novo_usuario.nome);
+        printf("seu ID unico e %d:\n", id);
+    }
     
     return 1;
 }
 
 void entrada(){
-    int escolha;
-    while(1){
-        printf("logar(1) ou registrar(2)\n");
-        scanf("%d", &escolha);
+    int primeiro_conta = consultar_numero_usuarios(bd);
 
-        if(escolha == 1){
-            if(login()) break;
+    while(1){
+        if(primeiro_conta == 0){
+            criar_conta(1);
         }
-        else if(escolha == 2){
-            criar_conta();
-        }
-        else printf("escolha 1 ou 2\n");
+        printf("Entra com a sua conta. \n");
+        if(login()) break;
     }
 }
