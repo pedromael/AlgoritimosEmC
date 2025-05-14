@@ -58,8 +58,6 @@ typedef struct{
 
 // variaveis externas
 
-extern int numero_usuarios;
-extern usuario *usuarios;
 extern int logado;
 extern sqlite3 *bd;
 

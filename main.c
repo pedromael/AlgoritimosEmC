@@ -10,18 +10,13 @@ int main()
     bd = conectar_bd();
     criar_tabelas(bd);
 
-    usuarios = malloc(30 * sizeof(usuario));
-
     while(1){
         if(!logado) entrada();
         
-        if(usuario_e_gerente(bd, logado)){
+        if(usuario_e_gerente(bd, logado))
             principal_gerente();
-        }else{
+        else
             principal_usuario();
-        }
-        
-        continue;
     }
 
     return 0;
