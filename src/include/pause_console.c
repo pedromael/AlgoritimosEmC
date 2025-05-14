@@ -1,7 +1,7 @@
 #include "../../main.h"
 
 void pause_console() {
-    printf("\nPressione ENTER para continuar...");
+    printf("\nPressione ENTER para continuar...\n");
     fflush(stdout);
     getchar();
 
