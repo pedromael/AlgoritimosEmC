@@ -2,6 +2,8 @@
 
 void principal_usuario()
 {
+    pause_console();
+
     int escolha;
 
     printf("------------------------------\n");
@@ -31,6 +33,8 @@ void principal_usuario()
 
 void principal_gerente()
 {
+    pause_console();
+    
     int escolha;
 
     printf("------------------------------\n");

@@ -4,7 +4,7 @@ LIBS = -lsqlite3
 
 TARGET = bank
 
-SRC = $(wildcard src/*.c) $(wildcard src/telas/*.c) main.c
+SRC = $(wildcard src/*.c) $(wildcard src/telas/*.c) $(wildcard src/include/*.c) main.c
 OBJS = $(SRC:.c=.o)
 
 all: $(TARGET)

@@ -42,6 +42,10 @@ void extrato_bancario(sqlite3 *bd, int id_user);
 void listar_usuarios(sqlite3 *bd);
 int usuario_e_gerente(sqlite3 *bd, int id_user);
 
+// funcoes uteis
+
+void pause_console();
+
 // estruturas
 
 typedef struct{
