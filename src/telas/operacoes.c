@@ -62,13 +62,10 @@ int levantamento(){
     printf("digite o dinheiro a levantar\n");
     scanf("%d", &valor);
 
-    if(valor > usuarios[logado-1].patrimonio_liquido){
-        printf("valor superior ao teu saldo\n");
+    if(valor > consultar_saldo(bd, logado)){
+        printf("valor superior ao seu patrimonio liquido\n");
+        return 0;
     }else{
-        if(consultar_saldo(bd, logado) < valor){
-            printf("valor superior ao seu patrimonio liquido\n");
-            return 0;
-        }
         inserir_levantamento(bd, logado, valor);
         printf("------------------------------\n");
         printf("---levantamento---simunlado---\n");
